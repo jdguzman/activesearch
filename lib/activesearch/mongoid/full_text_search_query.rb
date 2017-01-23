@@ -11,12 +11,9 @@ module ActiveSearch
       end
 
       def run
-        results = session.command({
-          'text'      => @name,
-          'search'    => @query,
-          'language'  => @language,
-          'filter'    => @filter
-        })
+        results = session[@name].where({
+          '$text' => { '$search' => @query, '$language'  => @language }
+        }.merge(@filter))
 
         ResultsSet.new(results, @options[:page], @options[:per_page])
       end

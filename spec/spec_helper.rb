@@ -20,13 +20,15 @@ RSpec.configure do |config|
   require 'database_cleaner'
   require 'database_cleaner/mongoid/truncation'
 
-  config.backtrace_clean_patterns = [
+  config.backtrace_exclusion_patterns = [
     /\/lib\d*\/ruby\//,
     /bin\//,
     /gems/,
     /spec\/spec_helper\.rb/,
     /lib\/rspec\/(core|expectations|matchers|mocks)/
   ]
+
+  ::I18n.enforce_available_locales = false
 
   config.before(:suite) do
     DatabaseCleaner['mongoid'].strategy = :truncation
